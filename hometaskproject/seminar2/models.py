@@ -9,6 +9,10 @@ class Klient(models.Model):
     data_reg = models.DateField(auto_now_add=True)
 
 
+    def __str__(self):
+        return f'Имя: {self.name}, почта: {self.email}'
+
+
 class Product(models.Model):
     name_product = models.CharField(max_length=100, blank=False)
     description = models.TextField()
@@ -17,8 +21,16 @@ class Product(models.Model):
     data_add = models.DateTimeField(auto_now_add=True)
 
 
+    def __str__(self):
+        return f'Продукт: {self.name_product}'
+
+
 class Order(models.Model):
     order_klient = models.ForeignKey(Klient, on_delete=models.CASCADE)
     order_product = models.ManyToManyField(Product)
-    price_summ = models.DecimalField(decimal_places=2, max_digits=10)
+    order_summ = models.DecimalField(decimal_places=2, max_digits=10)
     date_order = models.DateTimeField(auto_now_add=True)
+
+
+    def __str__(self):
+        return f'Заказ №{self.id} для {self.order_klient.name}'
